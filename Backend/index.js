@@ -29,7 +29,12 @@ const io = new Server(server, {
   }
 });
 
-app.use(cors({ origin: process.env.FRONTEND, credentials: true }));
+app.use(cors
+  ({ 
+    origin: process.env.FRONTEND, 
+    methods: ["GET", "POST"],
+    credentials: true 
+  }));
 app.use(bodyParser.json());
 
 connectDB();
@@ -39,14 +44,14 @@ setSocketIO(io);
 app.use("/api", humanRoutes);
 
 io.on("connection", (socket) => {
-    // console.log("Client connected:", socket.id);
+    console.log("Client connected:", socket.id);
 
     socket.on("disconnect", () => {
-        // console.log("Client disconnected:", socket.id);
+        console.log("Client disconnected:", socket.id);
     });
 });
 
-const PORT = 5000 
-server.listen(process.env.PORT || PORT, () => {
+const PORT = process.env.PORT || 5000 
+server.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
