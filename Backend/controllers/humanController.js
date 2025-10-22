@@ -40,7 +40,7 @@ const saveHumanData = async (req, res) => {
 // GET /api/human-data → get recent records
 const getAllHumanData = async (req, res) => {
   try {
-    const records = await HumanData.find().sort({ timestamp: -1 }).limit(20);
+    const records = await HumanData.find().sort({ timestamp: -1 });
     res.status(200).json(records);
   } catch (error) {
     console.error("❌ Error fetching data:", error);
