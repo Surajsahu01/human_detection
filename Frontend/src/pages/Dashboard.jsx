@@ -36,12 +36,24 @@ function Dashboard() {
     fetchData();
 
     // Initialize socket
+    // socketRef.current = io(API_URL, {
+    //   transports: ["websocket", "polling"],
+    // });
     socketRef.current = io(API_URL, {
-      transports: ["websocket", "polling"],
-    });
+    transports: ["websocket"],
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 2000,
+    secure: true,
+    rejectUnauthorized: false, // important for Render SSL
+  });
+
+    socketRef.current.on("connect_error", (err) => {
+    console.error("❌ Socket connect error:", err.message);
+  });
 
     socketRef.current.on("connect", () => {
-      // console.log("Socket connected:", socketRef.current.id);
+      console.log("Socket connected:", socketRef.current.id);
     });
 
     // Handle new human data in real-time
