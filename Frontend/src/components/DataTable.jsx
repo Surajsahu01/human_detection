@@ -12,7 +12,12 @@ function DataTable({ data }) {
               className="border rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition"
             >
               <div className="flex justify-between text-sm text-gray-600">
-                <span>{new Date(item.timestamp).toLocaleString()}</span>
+                {/* <span>{new Date(item.timestamp).toLocaleString("en-US")}</span> */}
+                <span>
+                  {new Date(item.timestamp).toLocaleString("en-GB",{
+                    hour12: true
+                  })}
+                </span>
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${
                     item.alertActive
@@ -68,9 +73,15 @@ function DataTable({ data }) {
             {data.length > 0 ? (
               data.map((item, i) => (
                 <tr key={i} className="border-b hover:bg-gray-50">
+                  {/* <td className="py-2 px-4">
+                    {new Date(item.timestamp).toLocaleString("en-US")}
+                  </td> */}
                   <td className="py-2 px-4">
-                    {new Date(item.timestamp).toLocaleString()}
+                    {new Date(item.timestamp).toLocaleString("en-GB", {
+                      hour12: true
+                    })}
                   </td>
+
                   <td className="py-2 px-4">
                     {item.humanPresence === "Detected" ? "Yes" : "No"}
                   </td>
@@ -101,6 +112,7 @@ function DataTable({ data }) {
         </table>
       </div>
     </div>
+    
   );
 }
 
